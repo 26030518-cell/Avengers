@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Los Vengadores | UCM</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0b0f;
+            color: white;
+            transition: 0.4s;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(5, 5, 8, 0.95);
+            border-bottom: 1px solid #333;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 25px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e62429;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e62429;
+        }
+
+        #modo {
+            border: none;
+            background: #e62429;
+            color: white;
+            padding: 9px 13px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 50px;
+
+            background:
+                linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.9)),
+                radial-gradient(circle at center, #7d1116, #09090c 60%);
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(50px, 9vw, 100px);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-shadow: 0 0 25px #e62429;
+        }
+
+        .hero h1 span {
+            color: #e62429;
+        }
+
+        .hero p {
+            margin: 25px auto;
+            font-size: 20px;
+            color: #ddd;
+            max-width: 700px;
+        }
+
+        .boton {
+            display: inline-block;
+            padding: 14px 30px;
+            background: #e62429;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .boton:hover {
+            background: #ff4045;
+            transform: scale(1.05);
+        }
+
+        /* ================= SECCIONES ================= */
+
+        section {
+            padding: 90px 7%;
+        }
+
+        .titulo {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 40px;
+        }
+
+        /* ================= BUSCADOR ================= */
+
+        .controles {
+            max-width: 1100px;
+            margin: auto auto 40px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        #buscador {
+            width: min(500px, 90%);
+            padding: 14px 20px;
+            border-radius: 30px;
+            border: 1px solid #555;
+            background: #16161c;
+            color: white;
+            outline: none;
+        }
+
+        .filtro {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #25252d;
+            color: white;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .filtro:hover,
+        .filtro.activo {
+            background: #e62429;
+        }
+
+        /* ================= TARJETAS ================= */
+
+        .contenedor-personajes {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+        }
+
+        .personaje {
+            background: #15151b;
+            border: 1px solid #292930;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: .4s;
+        }
+
+        .personaje:hover {
+            transform: translateY(-10px);
+            border-color: #e62429;
+            box-shadow: 0 10px 30px rgba(230, 36, 41, .25);
+        }
+
+        .imagen-personaje {
+            height: 280px;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            font-size: 80px;
+            padding-bottom: 20px;
+            background: linear-gradient(145deg, #292930, #101014);
+        }
+
+        .ironman {
+            background: linear-gradient(145deg, #6b1115, #15151b);
+        }
+
+        .capitan {
+            background: linear-gradient(145deg, #12294d, #15151b);
+        }
+
+        .thor {
+            background: linear-gradient(145deg, #352a61, #15151b);
+        }
+
+        .hulk {
+            background: linear-gradient(145deg, #205b27, #15151b);
+        }
+
+        .viuda {
+            background: linear-gradient(145deg, #401d38, #15151b);
+        }
+
+        .ojo {
+            background: linear-gradient(145deg, #5b401f, #15151b);
+        }
+
+        .spider {
+            background: linear-gradient(145deg, #1c345f, #15151b);
+        }
+
+        .doctor {
+            background: linear-gradient(145deg, #48232c, #15151b);
+        }
+
+        .informacion {
+            padding: 20px;
+        }
+
+        .informacion h3 {
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .informacion p {
+            color: #aaa;
+        }
+
+        /* ================= HISTORIA ================= */
+
+        .historia {
+            background: #101015;
+        }
+
+        .linea-tiempo {
+            max-width: 900px;
+            margin: auto;
+            border-left: 3px solid #e62429;
+            padding-left: 30px;
+        }
+
+        .evento {
+            background: #18181e;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .evento::before {
+            content: "";
+            position: absolute;
+            left: -42px;
+            top: 28px;
+            width: 17px;
+            height: 17px;
+            background: #e62429;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #e62429;
+        }
+
+        .evento h3 {
+            color: #e62429;
+            margin-bottom: 10px;
+        }
+
+        /* ================= ESTADISTICAS ================= */
+
+        .estadisticas {
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .estadistica {
+            background: #18181e;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        .estadistica h3 {
+            font-size: 40px;
+            color: #e62429;
+        }
+
+        /* ================= MODAL ================= */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            inset: 0;
+            background: rgba(0,0,0,.85);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-contenido {
+            width: min(600px, 95%);
+            background: #18181e;
+            border: 1px solid #e62429;
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            animation: aparecer .3s ease;
+        }
+
+        @keyframes aparecer {
+            from {
+                transform: scale(.7);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .cerrar {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .cerrar:hover {
+            color: #e62429;
+        }
+
+        #modalTitulo {
+            color: #e62429;
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        #modalTexto {
+            line-height: 1.7;
+            color: #ddd;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #050507;
+            padding: 40px 20px;
+            text-align: center;
+            color: #888;
+        }
+
+        footer strong {
+            color: #e62429;
+        }
+
+        /* ================= MODO CLARO ================= */
+
+        body.claro {
+            background: #f1f1f1;
+            color: #111;
+        }
+
+        body.claro header {
+            background: rgba(255,255,255,.95);
+        }
+
+        body.claro nav ul li a {
+            color: #111;
+        }
+
+        body.claro .personaje,
+        body.claro .evento,
+        body.claro .estadistica,
+        body.claro .modal-contenido {
+            background: white;
+            color: #111;
+        }
+
+        body.claro .informacion p,
+        body.claro .subtitulo {
+            color: #555;
+        }
+
+        body.claro .historia {
+            background: #ddd;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 700px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 12px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding-top: 160px;
+            }
+
+            section {
+                padding: 70px 5%;
+            }
+
+            .titulo {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav>
+
+        <div class="logo">
+            AVENGERS<span>UCM</span>
+        </div>
+
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#personajes">Héroes</a></li>
+            <li><a href="#historia">Historia</a></li>
+            <li><a href="#datos">Datos</a></li>
+        </ul>
+
+        <button id="modo">🌙</button>
+
+    </nav>
+</header>
+
+
+<!-- ================= INICIO ================= -->
+
+<section class="hero" id="inicio">
+
+    <div class="hero-content">
+
+        <h1>Los <span>Vengadores</span></h1>
+
+        <p>
+            Conoce a los héroes que formaron uno de los equipos más importantes
+            del Universo Cinematográfico de Marvel.
+        </p>
+
+        <a href="#personajes" class="boton">
+            Conocer héroes
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PERSONAJES ================= -->
+
+<section id="personajes">
+
+    <h2 class="titulo">Héroes del UCM</h2>
+
+    <p class="subtitulo">
+        Haz clic en cualquier personaje para conocer más información.
+    </p>
+
+    <div class="controles">
+
+        <input
+            type="text"
+            id="buscador"
+            placeholder="🔎 Buscar héroe..."
+        >
+
+        <button class="filtro activo" data-filtro="todos">
+            Todos
+        </button>
+
+        <button class="filtro" data-filtro="original">
+            Vengadores originales
+        </button>
+
+        <button class="filtro" data-filtro="nuevo">
+            Nuevos héroes
+        </button>
+
+    </div>
+
+
+    <div class="contenedor-personajes">
+
+
+        <article
+            class="personaje"
+            data-nombre="iron man"
+            data-tipo="original"
+            data-titulo="Iron Man"
+            data-info="Tony Stark es un inventor, empresario y uno de los miembros fundadores de los Vengadores. Utiliza una avanzada armadura tecnológica que él mismo desarrolla."
+        >
+
+            <div class="imagen-personaje ironman">
+                🤖
+            </div>
+
+            <div class="informacion">
+                <h3>Iron Man</h3>
+                <p>Tony Stark</p>
+            </div>
+
+        </article>
+
+
+        <article
+            class="personaje"
+            data-nombre="capitan america"
+            data-tipo="original"
+            data-titulo="Capitán América"
+            data-info="Steve Rogers es un supersoldado que utiliza un escudo indestructible. Se convirtió en uno de los principales líderes de los Vengadores."
+        >
+
+            <div class="imagen-personaje capitan">
+                🛡️
+            </div>
+
+            <div class="informacion">
+                <h3>Capitán América</h3>
+                <p>Steve Rogers</p>
+            </div>
+
+        </article>
+
+
+        <article
+            class="personaje"
+            data-nombre="thor"
+            data-tipo="original"
+            data-titulo="Thor"
+            data-info="Thor es el dios del trueno de Asgard. Es capaz de controlar el rayo y utiliza armas poderosas como Mjolnir y Stormbreaker."
+        >
+
+            <div class="imagen-personaje thor">
+                ⚡
+            </div>
+
+            <div class="informacion">
+                <h3>Thor</h3>
+                <p>Dios del Trueno</p>
+            </div>
+
+        </article>
+
+
+        <article
+            class="personaje"
+            data-nombre="hulk bruce banner"
+            data-tipo="original"
+            data-titulo="Hulk"
+            data-info="Bruce Banner es un científico especializado en radiación gamma. Debido a su exposición, puede transformarse en Hulk, una criatura de enorme fuerza."
+        >
+
+            <div class="imagen-personaje hulk">
+                💚
+            </div>
+
+            <div class="informacion">
+                <h3>Hulk</h3>
+                <p>Bruce Banner</p>
+            </div>
+
+        </article>
+
+
+        <article
+            class="personaje"
+            data-nombre="viuda negra"
+            data-tipo="original"
+            data-titulo="Viuda Negra"
+            data-info="Natasha Romanoff es una espía y experta en combate. Fue una pieza fundamental para los Vengadores durante varias misiones."
+        >
+
+            <div class="imagen-personaje viuda">
+                🕷️
+            </div>
+
+            <div class="informacion">
+                <h3>Viuda Negra</h3>
+                <p>Natasha Romanoff</p>
+            </div>
+
+        </article>
+
+
+        <article
+            class="personaje"
+            data-nombre="ojo de halcon"
+            data-tipo="original"
+            data-titulo="Ojo de Halcón"
+            data-info="Clint Barton es un experto arquero y miembro de los Vengadores. Sus habilidades de combate y precisión lo convierten en un miembro importante del equipo."
+        >
+
+            <div class="imagen-personaje ojo">
+                🏹
+            </div>
+
+            <div class="informacion">
+                <h3>Ojo de Halcón</h3>
+                <p>Clint Barton</p>
+            </div>
+
+        </article>
+
+
+        <article
+            class="personaje"
+            data-nombre="spider man"
+            data-tipo="nuevo"
+            data-titulo="Spider-Man"
+            data-info="Peter Parker es un joven héroe con fuerza sobrehumana, agilidad, sentido arácnido y la capacidad de lanzar telarañas."
+        >
+
+            <div class="imagen-personaje spider">
+                🕷️
+            </div>
+
+            <div class="informacion">
+                <h3>Spider-Man</h3>
+                <p>Peter Parker</p>
+            </div>
+
+        </article>
+
+
+        <article
+            class="personaje"
+            data-nombre="doctor strange"
+            data-tipo="nuevo"
+            data-titulo="Doctor Strange"
+            data-info="Stephen Strange es un poderoso hechicero que protege la Tierra de amenazas mágicas y dimensionales."
+        >
+
+            <div class="imagen-personaje doctor">
+                🔮
+            </div>
+
+            <div class="informacion">
+                <h3>Doctor Strange</h3>
+                <p>Stephen Strange</p>
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HISTORIA ================= -->
+
+<section class="historia" id="historia">
+
+    <h2 class="titulo">Historia de los Vengadores</h2>
+
+    <p class="subtitulo">
+        Algunos de los acontecimientos más importantes del UCM.
+    </p>
+
+
+    <div class="linea-tiempo">
+
+        <div class="evento">
+
+            <h3>2012 — La Batalla de Nueva York</h3>
+
+            <p>
+                Los Vengadores se reúnen por primera vez para enfrentarse
+                a Loki y al ejército Chitauri durante la invasión de Nueva York.
+            </p>
+
+        </div>
+
+
+        <div class="evento">
+
+            <h3>2015 — Era de Ultrón</h3>
+
+            <p>
+                El equipo enfrenta a Ultrón, una inteligencia artificial
+                creada a partir de un proyecto relacionado con Tony Stark.
+            </p>
+
+        </div>
+
+
+        <div class="evento">
+
+            <h3>2016 — Guerra Civil</h3>
+
+            <p>
+                Los Vengadores se dividen debido a sus diferencias sobre
+                la supervisión de los superhéroes.
+            </p>
+
+        </div>
+
+
+        <div class="evento">
+
+            <h3>2018 — Infinity War</h3>
+
+            <p>
+                Los héroes enfrentan a Thanos, quien busca reunir las
+                Gemas del Infinito.
+            </p>
+
+        </div>
+
+
+        <div class="evento">
+
+            <h3>2019 — Endgame</h3>
+
+            <p>
+                Los Vengadores restantes intentan revertir las consecuencias
+                del chasquido de Thanos y enfrentan una batalla decisiva.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DATOS ================= -->
+
+<section id="datos">
+
+    <h2 class="titulo">Los Vengadores en números</h2>
+
+    <p class="subtitulo">
+        Algunos datos generales relacionados con el equipo.
+    </p>
+
+    <div class="estadisticas">
+
+        <div class="estadistica">
+            <h3>6</h3>
+            <p>Vengadores originales</p>
+        </div>
+
+        <div class="estadistica">
+            <h3>2012</h3>
+            <p>Primera gran reunión</p>
+        </div>
+
+        <div class="estadistica">
+            <h3>5</h3>
+            <p>Eventos destacados</p>
+        </div>
+
+        <div class="estadistica">
+            <h3>∞</h3>
+            <p>Posibilidades del multiverso</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-contenido">
+
+        <span class="cerrar" id="cerrar">&times;</span>
+
+        <h2 id="modalTitulo"></h2>
+
+        <p id="modalTexto"></p>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        Página educativa sobre los personajes del
+        <strong>Universo Cinematográfico de Marvel</strong>.
+    </p>
+
+    <br>
+
+    <p>
+        Proyecto HTML + CSS + JavaScript
+    </p>
+
+</footer>
+
+
+<script>
+
+    /* ================= BUSCADOR ================= */
+
+    const buscador = document.getElementById("buscador");
+    const personajes = document.querySelectorAll(".personaje");
+    const filtros = document.querySelectorAll(".filtro");
+
+
+    buscador.addEventListener("input", function () {
+
+        const texto = buscador.value.toLowerCase();
+
+        personajes.forEach(personaje => {
+
+            const nombre = personaje.dataset.nombre;
+
+            if (nombre.includes(texto)) {
+                personaje.style.display = "block";
+            } else {
+                personaje.style.display = "none";
+            }
+
+        });
+
+    });
+
+
+    /* ================= FILTROS ================= */
+
+    filtros.forEach(filtro => {
+
+        filtro.addEventListener("click", function () {
+
+            filtros.forEach(btn => {
+                btn.classList.remove("activo");
+            });
+
+            this.classList.add("activo");
+
+            const tipo = this.dataset.filtro;
+
+            personajes.forEach(personaje => {
+
+                if (tipo === "todos") {
+                    personaje.style.display = "block";
+                }
+
+                else if (personaje.dataset.tipo === tipo) {
+                    personaje.style.display = "block";
+                }
+
+                else {
+                    personaje.style.display = "none";
+                }
+
+            });
+
+        });
+
+    });
+
+
+    /* ================= MODAL ================= */
+
+    const modal = document.getElementById("modal");
+    const modalTitulo = document.getElementById("modalTitulo");
+    const modalTexto = document.getElementById("modalTexto");
+    const cerrar = document.getElementById("cerrar");
+
+
+    personajes.forEach(personaje => {
+
+        personaje.addEventListener("click", function () {
+
+            modalTitulo.textContent = this.dataset.titulo;
+            modalTexto.textContent = this.dataset.info;
+
+            modal.style.display = "flex";
+
+        });
+
+    });
+
+
+    cerrar.addEventListener("click", function () {
+
+        modal.style.display = "none";
+
+    });
+
+
+    window.addEventListener("click", function (event) {
+
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+
+    });
+
+
+    /* ================= MODO OSCURO / CLARO ================= */
+
+    const modo = document.getElementById("modo");
+
+    modo.addEventListener("click", function () {
+
+        document.body.classList.toggle("claro");
+
+        if (document.body.classList.contains("claro")) {
+            modo.textContent = "☀️";
+        } else {
+            modo.textContent = "🌙";
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
